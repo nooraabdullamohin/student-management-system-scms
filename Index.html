@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f3f4f6;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Sidebar Active Menu Style */
+        .sidebar-active {
+            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        /* Soft Shadows */
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden text-gray-800">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#1e1b4b] text-white flex flex-col h-full flex-shrink-0 relative">
+        <!-- Logo Section -->
+        <div class="flex flex-col items-center justify-center py-8">
+            <div class="text-5xl mb-3 text-cyan-400">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h1 class="text-xl font-semibold text-center leading-tight">Student<br>Management<br>System</h1>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
+            <a href="#" class="sidebar-active flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition">
+                <i class="fa-solid fa-house w-5"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition">
+                <i class="fa-solid fa-user-plus w-5"></i>
+                <span>Register Student</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition">
+                <i class="fa-solid fa-users w-5"></i>
+                <span>Student List</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition">
+                <i class="fa-solid fa-user w-5"></i>
+                <span>Student Profile</span>
+            </a>
+            <a href="#" class="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-chart-simple w-5"></i>
+                    <span>Reports</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition">
+                <i class="fa-solid fa-gear w-5"></i>
+                <span>Settings</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition mt-8">
+                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
+
+        <!-- Bottom Illustration & Text -->
+        <div class="px-6 pb-6 mt-auto flex flex-col items-center">
+            <div class="text-6xl text-blue-400 mb-2">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <p class="text-xs text-gray-400 tracking-wider">Learn • Grow • Excel</p>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto bg-gray-50">
+        
+        <!-- Top Navbar -->
+        <header class="flex justify-between items-center px-8 py-5 bg-white shadow-sm sticky top-0 z-10">
+            <!-- Search -->
+            <div class="relative w-96">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" placeholder="Search students..." class="w-full bg-gray-100 text-sm rounded-full pl-11 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <!-- Right Side -->
+            <div class="flex items-center space-x-6">
+                <div class="relative cursor-pointer">
+                    <i class="fa-regular fa-bell text-xl text-gray-600"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-bold">3</span>
+                </div>
+                <div class="flex items-center space-x-3 cursor-pointer">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Admin" class="w-10 h-10 rounded-full border-2 border-indigo-500">
+                    <span class="text-sm font-medium text-gray-700">Admin <i class="fa-solid fa-chevron-down text-xs ml-1"></i></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content Area -->
+        <div class="p-8 space-y-6">
+            
+            <!-- Stats Cards Row -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-gradient-to-br from-blue-400 to-blue-500 rounded-2xl p-5 text-white flex items-center justify-between card-shadow">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-3 rounded-full">
+                            <i class="fa-solid fa-users text-2xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold">125</h2>
+                            <p class="text-sm text-blue-100">Total Students</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-2xl p-5 text-white flex items-center justify-between card-shadow">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-3 rounded-full">
+                            <i class="fa-solid fa-user-tie text-2xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold">72</h2>
+                            <p class="text-sm text-emerald-100">Male Students</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-gradient-to-br from-pink-400 to-pink-500 rounded-2xl p-5 text-white flex items-center justify-between card-shadow">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-3 rounded-full">
+                            <i class="fa-solid fa-user-nurse text-2xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold">53</h2>
+                            <p class="text-sm text-pink-100">Female Students</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-gradient-to-br from-amber-400 to-orange-400 rounded-2xl p-5 text-white flex items-center justify-between card-shadow">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-3 rounded-full">
+                            <i class="fa-regular fa-calendar-days text-2xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold">17</h2>
+                            <p class="text-sm text-amber-100">This Month</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Welcome Banner -->
+            <div class="bg-[#eef2ff] rounded-2xl p-8 flex flex-col md:flex-row justify-between items-center relative overflow-hidden card-shadow">
+                <!-- Left Content -->
+                <div class="z-10 md:w-1/2 space-y-4">
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 flex items-center">
+                        <span class="mr-3 text-3xl">👋</span> Welcome to <br>
+                        <span class="text-indigo-900 text-3xl md:text-4xl mt-1 block">Student Management System</span>
+                    </h1>
+                    <p class="text-gray-600">Manage student data easily and efficiently.</p>
+                    <div class="flex space-x-4 pt-2">
+                        <button class="bg-[#6366f1] hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-medium text-sm transition flex items-center">
+                            <i class="fa-solid fa-plus mr-2"></i> Add New Student
+                        </button>
+                        <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-5 py-2.5 rounded-lg font-medium text-sm transition flex items-center">
+                            <i class="fa-solid fa-list-ul mr-2 text-indigo-600"></i> View All Students
+                        </button>
+                    </div>
+                </div>
+                <!-- Right Illustration (Placeholder using FontAwesome & CSS shapes) -->
+                <div class="hidden md:flex md:w-1/2 justify-end relative">
+                    <div class="relative w-64 h-48">
+                        <!-- Book stack representation -->
+                        <div class="absolute bottom-0 right-0 w-full flex flex-col items-center">
+                            <i class="fa-solid fa-graduation-cap text-[100px] text-[#1e1b4b] absolute -top-12 z-20"></i>
+                            <div class="w-56 h-6 bg-blue-200 rounded-md mb-1 transform rotate-2"></div>
+                            <div class="w-48 h-6 bg-orange-200 rounded-md mb-1 transform -rotate-1"></div>
+                            <div class="w-60 h-6 bg-indigo-300 rounded-md mb-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section: Table & Quick Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Recent Students Table -->
+                <div class="lg:col-span-2 bg-white rounded-2xl card-shadow p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-bold text-gray-800 flex items-center">
+                            <i class="fa-solid fa-list text-indigo-600 mr-2"></i> Recent Students
+                        </h2>
+                        <a href="#" class="text-sm text-indigo-600 font-medium hover:underline flex items-center">
+                            View All <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
+                                    <th class="p-3 font-medium rounded-l-lg">#</th>
+                                    <th class="p-3 font-medium">Name</th>
+                                    <th class="p-3 font-medium">Gender</th>
+                                    <th class="p-3 font-medium">ID</th>
+                                    <th class="p-3 font-medium text-center rounded-r-lg">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                <!-- Row 1 -->
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="p-3 font-medium text-gray-700">1</td>
+                                    <td class="p-3 font-medium text-gray-800">Rahim Ahmed</td>
+                                    <td class="p-3"><span class="bg-blue-100 text-blue-600 px-2.5 py-1 rounded-full text-xs font-medium">Male</span></td>
+                                    <td class="p-3 text-gray-500">STU001</td>
+                                    <td class="p-3">
+                                        <div class="flex justify-center space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="bg-emerald-500 hover:bg-emerald-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-pen"></i></button>
+                                            <button class="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Row 2 -->
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="p-3 font-medium text-gray-700">2</td>
+                                    <td class="p-3 font-medium text-gray-800">Ayesha Akter</td>
+                                    <td class="p-3"><span class="bg-pink-100 text-pink-600 px-2.5 py-1 rounded-full text-xs font-medium">Female</span></td>
+                                    <td class="p-3 text-gray-500">STU002</td>
+                                    <td class="p-3">
+                                        <div class="flex justify-center space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="bg-emerald-500 hover:bg-emerald-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-pen"></i></button>
+                                            <button class="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Row 3 -->
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="p-3 font-medium text-gray-700">3</td>
+                                    <td class="p-3 font-medium text-gray-800">Sakib Hasan</td>
+                                    <td class="p-3"><span class="bg-blue-100 text-blue-600 px-2.5 py-1 rounded-full text-xs font-medium">Male</span></td>
+                                    <td class="p-3 text-gray-500">STU003</td>
+                                    <td class="p-3">
+                                        <div class="flex justify-center space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="bg-emerald-500 hover:bg-emerald-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-pen"></i></button>
+                                            <button class="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Row 4 -->
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="p-3 font-medium text-gray-700">4</td>
+                                    <td class="p-3 font-medium text-gray-800">Nusrat Jahan</td>
+                                    <td class="p-3"><span class="bg-pink-100 text-pink-600 px-2.5 py-1 rounded-full text-xs font-medium">Female</span></td>
+                                    <td class="p-3 text-gray-500">STU004</td>
+                                    <td class="p-3">
+                                        <div class="flex justify-center space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="bg-emerald-500 hover:bg-emerald-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-pen"></i></button>
+                                            <button class="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Row 5 -->
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-3 font-medium text-gray-700">5</td>
+                                    <td class="p-3 font-medium text-gray-800">Tanvir Islam</td>
+                                    <td class="p-3"><span class="bg-blue-100 text-blue-600 px-2.5 py-1 rounded-full text-xs font-medium">Male</span></td>
+                                    <td class="p-3 text-gray-500">STU005</td>
+                                    <td class="p-3">
+                                        <div class="flex justify-center space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="bg-emerald-500 hover:bg-emerald-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-pen"></i></button>
+                                            <button class="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-md text-xs w-7 h-7"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-2xl card-shadow p-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-6 flex items-center">
+                        <i class="fa-solid fa-chart-simple text-indigo-600 mr-2"></i> Quick Actions
+                    </h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Action 1 -->
+                        <button class="bg-[#0ea5e9] hover:bg-sky-600 text-white rounded-xl p-4 flex flex-col items-center justify-center transition h-28">
+                            <i class="fa-solid fa-user-plus text-2xl mb-2"></i>
+                            <span class="text-sm font-medium text-center">Register<br>Student</span>
+                        </button>
+                        <!-- Action 2 -->
+                        <button class="bg-[#10b981] hover:bg-emerald-600 text-white rounded-xl p-4 flex flex-col items-center justify-center transition h-28">
+                            <i class="fa-solid fa-users text-2xl mb-2"></i>
+                            <span class="text-sm font-medium text-center">View<br>Students</span>
+                        </button>
+                        <!-- Action 3 -->
+                        <button class="bg-[#f59e0b] hover:bg-amber-600 text-white rounded-xl p-4 flex flex-col items-center justify-center transition h-28">
+                            <i class="fa-solid fa-file-lines text-2xl mb-2"></i>
+                            <span class="text-sm font-medium text-center">Generate<br>Reports</span>
+                        </button>
+                        <!-- Action 4 -->
+                        <button class="bg-[#8b5cf6] hover:bg-violet-600 text-white rounded-xl p-4 flex flex-col items-center justify-center transition h-28">
+                            <i class="fa-solid fa-download text-2xl mb-2"></i>
+                            <span class="text-sm font-medium text-center">Export Data</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+</body>
+  </html>
